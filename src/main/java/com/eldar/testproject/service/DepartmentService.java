@@ -4,8 +4,6 @@ import com.eldar.testproject.entity.Department;
 import com.eldar.testproject.exeption.BadRequestException;
 import com.eldar.testproject.exeption.NotFoundRequestException;
 import com.eldar.testproject.repository.DepartmentRepository;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +12,8 @@ import java.util.List;
 
 @Service
 @Slf4j
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class DepartmentService {
-    DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Autowired
     public DepartmentService(DepartmentRepository departmentRepository) {
@@ -24,7 +21,7 @@ public class DepartmentService {
     }
 
     public Department getDepartment(Long id){
-        return departmentRepository.findDepartmentById(id)
+        return departmentRepository.findById(id)
                 .orElseThrow(() ->
                         new NotFoundRequestException(
                                 String.format("Подразделение с id %s не найдено", id)
