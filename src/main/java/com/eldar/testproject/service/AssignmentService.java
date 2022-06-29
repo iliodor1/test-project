@@ -22,7 +22,7 @@ public class AssignmentService {
         return assignmentRepository.findById(id)
                 .orElseThrow(()->
                         new NotFoundRequestException(
-                                String.format(("Поручение не найдено"))
+                                String.format(("Поручение %s не найдено"), id)
                         ));
     }
 }
