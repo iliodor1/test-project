@@ -4,8 +4,6 @@ import com.eldar.testproject.entity.Employee;
 import com.eldar.testproject.exeption.BadRequestException;
 import com.eldar.testproject.exeption.NotFoundRequestException;
 import com.eldar.testproject.repository.EmployeeRepository;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +12,8 @@ import java.util.List;
 
 @Service
 @Slf4j
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class EmployeeService {
-    EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
     public EmployeeService(EmployeeRepository employeeRepository) {
@@ -24,7 +21,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployee(Long id) throws NotFoundRequestException {
-        return employeeRepository.findEmployeeById(id)
+        return employeeRepository.findById(id)
                 .orElseThrow(() ->
                         new NotFoundRequestException(
                                 String.format("Сотрудник c id %s не найден", id)
