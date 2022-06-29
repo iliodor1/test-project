@@ -2,19 +2,20 @@ package com.eldar.testproject.controller;
 
 import com.eldar.testproject.entity.Employee;
 import com.eldar.testproject.service.EmployeeService;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("employees")
-@AllArgsConstructor
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class EmployeeController {
-    EmployeeService employeeService;
+    private final EmployeeService employeeService;
+
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("/{id}")
     public Employee getEmployee(@PathVariable Long id) {
@@ -32,7 +33,7 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public Employee updateEmployee(Employee employee) {
+    public Employee updateEmployee(@RequestBody Employee employee) {
         return employeeService.updateEmployee(employee);
     }
 
